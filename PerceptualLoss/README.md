@@ -1,5 +1,6 @@
 # Perceptual Loss
 [Perceptual Losses for Real-Time Style Transfer and Super-Resolution](https://arxiv.org/pdf/1603.08155)  
+
 Perceptual loss functions are based on high-level feature extracted from a loss network $\phi$ pretrained for image classification (16-layer VGG), measuring high-level perceptual and semantic differences between images.
 
 ## Feature Reconstruction Loss
