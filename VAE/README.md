@@ -56,5 +56,5 @@ L_{KL} &=\frac{1}{2}(-log\sigma^2+\mu^2+\sigma^2-1)
 ## AE
 Auto-Encoder (AE): a self-training mechanism, with encoder compressing image $x$ into a latent vector/embedding $z$, decoder decompressing $z$ into an image $\hat{x}$, and MSE loss function to minimize the difference between $x$ and $\hat{x}$. The decoder is the final generative model, with $z$ sampled from standard normal distribution. However, the encoding $z$ may too short if the sturctures of encoder and decoder are sufficiently complicated, and it will lead the generative model over-fitting.
 ```math
-z = \mathop{argmin}_z\lVert\hat{x}-x\rVert^2
+z = \mathop{argmin}_z\lVert x-\hat{x}\rVert^2
 ```
