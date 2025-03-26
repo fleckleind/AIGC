@@ -32,6 +32,9 @@ ELBO&:=\mathbb{E}_{z\sim q}(logp(x|z))-KL[q(z\vert x)\lVert p(z)]
 ```
 The first term $\mathbb{E}_{z\sim q}(log(logp(x|z))$ evaluates the quality of image reconstruction, and the second term $KL[q(z\vert x)\lVert p(z)]$ evaluates the similarity between the encoder output $q(z\vert x)$ and posterior distribution $p(z)\sim N(0,I)$ to regularize the latent vector.
 
+## Reparameterization Trick
+Sampling $z$ from $Q(z|x)$, as a non-continuous operation withou gradient, VAE cannot back-propagate the error back to encoder. The reparameterization trick is then proposed, with $\epsilon\sim N(0,I)$ multiplied with $\sigma$ then added with $\mu$.
+
 ## AE
 Auto-Encoder (AE): a self-training mechanism, with encoder compressing image $x$ into a latent vector/embedding $z$, decoder decompressing $z$ into an image $\hat{x}$, and MSE loss function to minimize the difference between $x$ and $\hat{x}$. The decoder is the final generative model, with $z$ sampled from standard normal distribution. However, the encoding $z$ may too short if the sturctures of encoder and decoder are sufficiently complicated, and it will lead the generative model over-fitting.
 ```math
