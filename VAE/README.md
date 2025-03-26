@@ -19,15 +19,15 @@ Move $logp(x)$ to the left side:
 ```math
 \begin{align}
 logp(x)-KL[q(z\vert x)\lVert g(z\vert x)]&=\mathbb{E}_{z\sim q}(logp(x|z)+logp(z)-logq(z\vert x))\\
-logp(x)-KL[q(z\vert x)\lVert g(z\vert x)]&=\mathbb{E}_{z\sim q}(log(logp(x|z))+\mathbb{E}_{z\sim q}(logp(z)-logq(z\vert x))\\
-logp(x)-KL[q(z\vert x)\lVert g(z\vert x)]&=\mathbb{E}_{z\sim q}(log(logp(x|z))-KL[q(z\vert x)\lVert p(z)]
+logp(x)-KL[q(z\vert x)\lVert g(z\vert x)]&=\mathbb{E}_{z\sim q}(logp(x|z))+\mathbb{E}_{z\sim q}(logp(z)-logq(z\vert x))\\
+logp(x)-KL[q(z\vert x)\lVert g(z\vert x)]&=\mathbb{E}_{z\sim q}(logp(x|z))-KL[q(z\vert x)\lVert p(z)]
 \end{align}
 ```
 Based on the non-negative property of KL divergence:
 ```math
 \begin{align}
-log(x)&\geq\mathbb{E}_{z\sim q}(log(logp(x|z))-KL[q(z\vert x)\lVert p(z)]\\
-ELBO&:=\mathbb{E}_{z\sim q}(log(logp(x|z))-KL[q(z\vert x)\lVert p(z)]
+log(x)&\geq\mathbb{E}_{z\sim q}(logp(x|z))-KL[q(z\vert x)\lVert p(z)]\\
+ELBO&:=\mathbb{E}_{z\sim q}(logp(x|z))-KL[q(z\vert x)\lVert p(z)]
 \end{align}
 ```
 The first term $\mathbb{E}_{z\sim q}(log(logp(x|z))$ evaluates the quality of image reconstruction, and the second term $KL[q(z\vert x)\lVert p(z)]$ evaluates the similarity between the encoder output $q(z\vert x)$ and posterior distribution $p(z)\sim N(0,I)$ to regularize the latent vector.
