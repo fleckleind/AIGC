@@ -22,19 +22,6 @@ class CelebADataset(Dataset):
             transforms.Resize(self.img_shape),
             transforms.ToTensor()])
         return pipeline(img)
-
-
-CELEBA_HQ_DIR = '/kaggle/input/celebahq-resized-256x256/celeba_hq_256'
-def get_dataloader(type, batch_size, img_shape=None, dist_train=False,
-                   num_workers=4, use_lmdb=False, **kwargs):
-    if img_shape is not None:
-        kwargs['img_shape'] = img_shape
-    dataset = CelebADataset(CELEBA_HQ_DIR, **kwargs)
-    if dist_train:  # distributed training, always with data parallel
-        sampler = DistributedSampler(dataset)
-        dataloader = DataLoader(dataset, batch_size=batch_size,
-                                sampler=sampler, num_workers=num_workers)
-        return dataloader, sampler
     else:
         dataloader = DataLoader(dataset, batch_size=batch_size,
                                 shuffle=True, num_workers=num_workers)
