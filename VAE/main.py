@@ -5,8 +5,10 @@ import torch.nn.functional as F
 from torch.utils.data import DataLoader
 from torchvision.transforms import ToPILImage
 from torch.utils.data.distributed import DistributedSampler
-from data import CelebADataset
-from model import VAE
+
+from VAE.model import VAE
+from VAE.data import CelebADataset
+
 
 # dataloader
 CELEBA_HQ_DIR = '/kaggle/input/celebahq-resized-256x256/celeba_hq_256'
