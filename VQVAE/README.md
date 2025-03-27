@@ -22,19 +22,26 @@ Assuming the embedding space is well-trained, the reconstruction loss of VQ-VAE 
 ```math
 L_{Rec}=\lVert x-D(z_q(x))\rVert_2^2
 ```
-However, this reconstruction loss function cannot propagate the losss to the encoder, because vector quantisation from $z_e$ to $z_q$ has no real gradient. VQ-VAE introduces straight-through estimator shown as follows:
+However, this reconstruction loss function cannot propagate the losss to the encoder, because vector quantisation from $z_e$ to $z_q$ has no real gradient. VQ-VAE introduces straight-through estimator as follows:
 ```math
 sg(x)=\left\{\begin{aligned}
 x &, forward\\
 0 &, backward
 \end{aligned}\right.
 ```
-The reconstruction loss is then designed as below. In backward propagation, $sg(z_q(x)-z_e(x))$ term is set as 0, which equals to directly calculate loss based on encoder output $z_e(x)$. And the loss is still based on VQ-embedding $z_q(x)$ in forward propagation.
+In backward propagation, $sg(z_q(x)-z_e(x))$ term is set as 0, which equals to directly calculate loss based on encoder output $z_e(x)$. And the loss is still based on VQ-embedding $z_q(x)$ in forward propagation.
+```math
+L_{Rec}=\left\{\begin{aligned}
+\lVert x-D(z_q(x))\rVert_2^2 &, forward\\
+\lVert x-D(z_e(x))\rVert_2^2 &, backward
+\end{aligned}\right.
+```
+The designed reconstruction loss is then simplified as below:
 ```math
 L_{Rec}=\lVert x-D(z_e(x)+sg(z_q(x)-z_e(x))) \rVert_2^2
 ```
 
-
+## Embedding Space Loss
 
 
 
