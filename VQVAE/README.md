@@ -44,10 +44,13 @@ L_{Rec}=\lVert x-D(z_e(x)+sg(z_q(x)-z_e(x))) \rVert_2^2
 ## Codebook Loss
 According to the designed nearest neighbour method, VQ-VAE indirectly updates the codebook/embedding space by optimising the similarity between the encoder output $z_e$ and the decoder input $z_q$ as follows.
 ```math
-L_e = \beta\lVert z_e(x)-z_q(x)\rVert_2^2
+L_e = \lVert z_e(x)-z_q(x)\rVert_2^2
 ```
 
-
+The total los is then calculated as:
+```math
+\lVert x-D(z_e(x)+sg(z_q(x)-z_e(x))\rVert_2^2+\beta\lVert sg(z_e(x))-z_q(x)\rVert_2^2+\gamma\lVert z_e(x)-sg(z_q(x))\rVert_2^2
+```
 
 
 
