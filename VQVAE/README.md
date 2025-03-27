@@ -41,9 +41,11 @@ The designed reconstruction loss is then simplified as below:
 L_{Rec}=\lVert x-D(z_e(x)+sg(z_q(x)-z_e(x))) \rVert_2^2
 ```
 
-## Embedding Space Loss
-
-
+## Codebook Loss
+According to the designed nearest neighbour method, VQ-VAE indirectly updates the codebook/embedding space by optimising the similarity between the encoder output $z_e$ and the decoder input $z_q$ as follows.
+```math
+L_e = \beta\lVert z_e(x)-z_q(x)\rVert_2^2
+```
 
 
 
