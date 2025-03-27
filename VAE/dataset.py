@@ -1,10 +1,10 @@
 from PIL import Image
 from torchvision import transforms
-from torch.utils.data import Dataset, DataLoader
-from torch.utils.data.distributed import DistributedSampler
+from torch.utils.data import Dataset
 
 
 class CelebADataset(Dataset):
+
     def __init__(self, root, img_shape=(64, 64)):
         super().__init__()
         self.root = root
@@ -20,9 +20,6 @@ class CelebADataset(Dataset):
         pipeline = transforms.Compose([
             transforms.CenterCrop(168),
             transforms.Resize(self.img_shape),
-            transforms.ToTensor()])
+            transforms.ToTensor()
+        ])
         return pipeline(img)
-    else:
-        dataloader = DataLoader(dataset, batch_size=batch_size,
-                                shuffle=True, num_workers=num_workers)
-        return dataloader
