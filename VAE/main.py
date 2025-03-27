@@ -59,7 +59,7 @@ def reconstruct_vae(model, device, dataloader, ckpt_path='/kaggle/working/'):
     inputx = batch[0].detach().cpu()
     combined = torch.cat((output, inputx), dim=1)
     img = ToPILImage()(combined)
-    img.save(os.path.join(ckpt_path, 'tmp.jpg')))
+    img.save(os.path.join(ckpt_path, 'tmp.jpg'))
 
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
