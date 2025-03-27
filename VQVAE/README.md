@@ -46,14 +46,11 @@ According to the designed nearest neighbour method, VQ-VAE indirectly updates th
 ```math
 L_e = \lVert z_e(x)-z_q(x)\rVert_2^2
 ```
-
-The total los is then calculated as:
+To differentiate the learning speed of encoder and embedding vector, VQ-VAE use vector quantisation (VQ) in dictionary learning algorithm to optimise embedding space as the first term, with second term as attentive loss to constrain the encoder output $z_e(x)$.
 ```math
-\lVert x-D(z_e(x)+sg(z_q(x)-z_e(x))\rVert_2^2+\beta\lVert sg(z_e(x))-z_q(x)\rVert_2^2+\gamma\lVert z_e(x)-sg(z_q(x))\rVert_2^2
+L_e=\lVert sg(z_e(x))-z_q(x) \rVert_2^2+\beta\lVert z_e(x)-sg(z_q(x))\rVert_2^2
 ```
-
-
-
-
-
-
+The total loss is then calculated as follows, with $\beta=4\gamma$:
+```math
+L=\lVert x-D(z_e(x)+sg(z_q(x)-z_e(x)))\rVert_2^2+\beta\lVert sg(z_e(x))-z_q(x)\rVert_2^2+\gamma\lVert z_e(x)-sg(z_q(x))\rVert_2^2
+```
