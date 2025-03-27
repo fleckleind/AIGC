@@ -5,7 +5,7 @@ import torch.nn.functional as F
 from torch.utils.data import DataLoader
 from torchvision.transforms import ToPILImage
 from torch.utils.data.distributed import DistributedSampler
-from dataset import CelebADataset
+from data import CelebADataset
 from model import VAE
 
 # dataloader
