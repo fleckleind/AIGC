@@ -2,7 +2,24 @@ import os
 import torch
 from time import time
 import torch.nn.functional as F
+from torch.utils.data import DataLoader
 from torchvision.transforms import ToPILImage
+from torch.utils.data.distributed import DistributedSampler
+from dataset import CelebADataset
+from model import VAE
+
+# dataloader
+CELEBA_HQ_DIR = '/kaggle/input/celebahq-resized-256x256/celeba_hq_256'
+def get_dataloader(type, batch_size, img_shape=None, dist_train=False,
+                   num_workers=4, use_lmdb=False, **kwargs):
+    if img_shape is not None:
+        kwargs['img_shape'] = img_shape
+    dataset = CelebADataset(CELEBA_HQ_DIR, **kwargs)
+    if dist_train:  # distributed training, always with data parallel
+        sampler = DistributedSampler(dataset)
+        dataloader = DataLoader(dataset, batch_size=batch_size,
+                                sampler=sampler, num_workers=num_workers)
+        return dataloader, sampler
 
 # VAE loss: MSE and KL
 def loss_vae(target, inputs, mean, logvar, kl_weight=0.00025):
@@ -49,5 +66,5 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model = VAE().to(device)
 dataloader = get_dataloader(type='CelebAHQ', batch_size=16, img_shape=64)
 train_vae(model=model, dataloader=dataloader, lr=0.005, epochs=10, device=device)
-# model.load_state_dict(torch.load('/kaggle/working/model.pth', weights_only=True))
-# reconstruct_vae(model=model, device=device, dataloader=dataloader)
+model.load_state_dict(torch.load('/kaggle/working/VAE.pth', weights_only=True))
+reconstruct_vae(model=model, device=device, dataloader=dataloader)
