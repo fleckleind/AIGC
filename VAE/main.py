@@ -55,7 +55,7 @@ def reconstruct_vae(model, device, dataloader, ckpt_path='/kaggle/working/'):
     model.eval()
     batch = next(iter(dataloader))
     x = batch[0:1, ...].to(device)
-    output = model(x)[0].detach().cpu()
+    output = model(x)[0][0].detach().cpu()
     inputx = batch[0].detach().cpu()
     combined = torch.cat((output, inputx), dim=1)
     img = ToPILImage()(combined)
