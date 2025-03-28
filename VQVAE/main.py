@@ -55,8 +55,8 @@ def train_vqvae(model: VQVAE, img_shape=None,
             l_reconstruct = mse_loss(x, x_hat)  # Vreconstruction loss
             # perceptual reconstruction loss
             # l_reconstruct = PerceptualLoss(mse_loss, layer_indexs=[14], device=device)(x, x_hat)
-            l_embedding = mse_loss(ze.detach(), zq)  # vector quantilization loss
-            l_commitment = mse_loss(ze, zq.detach())  # commitment loss
+            l_embedding = mse_loss(ze.detach(), zq)  # vector quantilization loss: z_q->z_e
+            l_commitment = mse_loss(ze, zq.detach())  # commitment loss: z_e->z_q
             loss = l_reconstruct + \
                 l_w_embedding * l_embedding + l_w_commitment * l_commitment  # alpha=1, beta=0.25
             optimizer.zero_grad()
