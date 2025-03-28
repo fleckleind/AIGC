@@ -25,7 +25,7 @@ class VQVAE(nn.Module):
             nn.Conv2d(dim, dim, 3, 1, 1),
             ResidualBlockVAE(dim),  ResidualBlockVAE(dim),
         )
-        self.vq_embedding = nn.Embedding(n_embedding, dim)  # add dimension at last
+        self.vq_embedding = nn.Embedding(n_embedding, dim)  # (attributes, dimensionality)
         self.vq_embedding.weight.data.uniform_(-1.0/n_embedding, 1.0/n_embedding)
         self.decoder = nn.Sequential(
             nn.Conv2d(dim, dim, 3, 1, 1),
@@ -46,7 +46,7 @@ class VQVAE(nn.Module):
         ze_broadcast = ze.reshape(b, 1, c, h, w)
         distance = torch.sum((embedding_broadcast - ze_broadcast)**2, 2)  # (b,k,h,w)
         nearest_neighbor = torch.argmin(distance, 1)  # (b,h,w)
-        zq = self.vq_embedding(nearest_neighbor).permute(0, 3, 1, 2)  # (b,h,w,k)->(b,k,h,w)
+        zq = self.vq_embedding(nearest_neighbor).permute(0, 3, 1, 2)  # (b,h,w,c)->(b,c,h,w)
         # stop back gradient
         decoder_input = ze + (zq - ze).detach()
         # decoder
@@ -72,6 +72,10 @@ class VQVAE(nn.Module):
         x_hat = self.decoder(z_q)
         return x_hat
 
+    # Shape: [C, H, W]
+    def get_latent_HW(self, input_shape):
+        C, H, W = input_shape
+        return (H // 2**self.n_downsample, W // 2**self.n_downsample)
     # Shape: [C, H, W]
     def get_latent_HW(self, input_shape):
         C, H, W = input_shape
