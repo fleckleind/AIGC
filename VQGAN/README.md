@@ -38,3 +38,6 @@ To control over the generation process with provided additional information $c$,
 p(s|c)=\prod_i p(s_i|s_{\textless i}, c)
 ```
 It notes that if the conditioning information has spatial extent, VQ-GAN first learns another VQ-GAN to obtain aother codebook $Z_c$, with representation $r\in\\{0,\ldots,|Z_c|-1\\}^{h_c\times w_c}$.
+
+## High-Resolution Images Generation
+?
