@@ -1,5 +1,5 @@
 # Official Implementation
-Official Implementation Repository: [taming-transformers](https://github.com/CompVis/taming-transformers/)  
+Repository: [taming-transformers](https://github.com/CompVis/taming-transformers/), [VQGAN-pytorch](https://github.com/dome272/VQGAN-pytorch)  
 
 ## Encoder and Decoder
 U-Net block consisting of residual connection block and attnetion module, with downsampling as convolution and upsampling as nearest interpolation.
