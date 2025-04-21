@@ -9,7 +9,6 @@ from torch.utils.data.distributed import DistributedSampler
 
 from VQVAE.model import VQVAE
 from VQVAE.data import CelebADataset
-from GenerationRepo.PerceptualLoss.pcptloss import PerceptualLoss
 
 
 # dataloader
