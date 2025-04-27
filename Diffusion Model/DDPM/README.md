@@ -102,6 +102,11 @@ The reverse process denoise any noisy image to generate image. Firstly sample $x
 ```math
 x_{t-1}=\frac{1}{\sqrt{\alpha_t}}(x_t-\frac{1-\alpha_t}{\sqrt{1-\bar{\alpha}_t}}\epsilon_\theta(x_t, t))+\sigma_t z
 ```
+With no definition for $\bar{\alpha}_{t-1}$ when $t=0$, there is no variance for moment $t=0$. And for $\sigma_t$, it is defined as $\beta_t$ for $x_0\sim N(0,I)$ and 
+```math
+\sigma_t = \frac{1-\bar{\alpha}_{t-1}}{1-\bar{\alpha}_t}\beta_t
+```
+from the derivation of reverse process formula for specific distribution.
 
 ## Reference
 [What are Diffusion Models?](https://lilianweng.github.io/posts/2021-07-11-diffusion-models/#connection-with-stochastic-gradient-langevin-dynamics)  
