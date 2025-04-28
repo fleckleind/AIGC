@@ -48,7 +48,7 @@ L=\lVert \epsilon_t-\epsilon_{\theta}(x_t, t)\rVert^2
 ```
 
 ### Supplement
-The diffusion model $p_\theta(x_0)$, with trainable parameters $\theta$, describes the probability of generating data $x_0$ in the reverse process.
+The reverse model $p_\theta(x_0)$, with trainable parameters $\theta$, describes the probability of generating data $x_0$ in the reverse process.
 ```math
 p_\theta(x_{0:T})=\int p_\theta(x_{0:T})dx_{1:T}=p(x_T)\prod_{t-1}^T p_\theta(x_{t-1}|x_t)
 ```
@@ -56,7 +56,7 @@ And the recursion formula is shown as follows, with $\Sigma_\theta(x_t, t)=\tild
 ```math
 p_\theta(x_{t-1}|x_t)=N(x_{t-1};\mu_\theta(x_t, t), \Sigma_\theta(x_t, t))
 ```
-The original ambition of diffusion model is to maximise the probability $p_\theta(x_0)$, which is equal to minimise $-log p_\theta(x_0)$ and the ambition is described as follows via variational lower bound in VAE:
+The original ambition of reverse model is to maximise the probability $p_\theta(x_0)$, which is equal to minimise $-log p_\theta(x_0)$ and the ambition is described as follows via variational lower bound in VAE:
 ```math
 L_{VLB}=E[D_{KL}(q(x_T|x_0)\lVert p_\theta(x_T))+
 \sum_{t=2}^T D_{KL}(q(x_{t-1}|x_t, x_0)\lVert p_\theta(x_{t-1}|x_t))-
