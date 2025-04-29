@@ -39,4 +39,20 @@ def train(ddpm: DDPM, net, device, batch_size=16, img_shape=128, n_epochs=100, c
 
 ddpm = DDPM(device='cuda', n_steps=1000)
 net = DDPMUNet(n_steps=1000, img_shape=(3, 128, 128), pe_dim=128, chans=[16, 32, 64, 128], residual=True)
-train(ddpm, net, device='cuda', batch_size=16, img_shape=128, n_epochs=100, ckpt_path='/kaggle/working/')
+# train(ddpm, net, device='cuda', batch_size=16, img_shape=128, n_epochs=100, ckpt_path='/kaggle/working/')
+
+
+def sample_imgs(ddpm: DDPM, net, output_path, shape, n_sample=81, device='cuda', simple_var=True):
+    net = net.to(device)
+    net = net.eval()
+    with torch.no_grad():
+        imgs = ddpm.sample_backward(shape, net, device=device, simple_var=simple_var).detach().cpu()
+        imgs = (imgs * 255).clip(0, 255)
+        imgs = einops.rearrange(imgs, '(b1 b2) c h w -> (b1 h) (b2 w) c', b1=int(n_sample**0.5))
+        imgs = imgs.detach().cpu().numpy().astype(np.uint8)
+        imgs = cv2.cvtColor(imgs, cv2.COLOR_RGB2BGR)
+        save_path = os.path.join(output_path + 'sample.jpg')
+        cv2.imwrite(save_path, imgs)
+        
+net.load_state_dict(torch.load('/kaggle/input/temp-weight/DDPM-95.pth', weights_only=True))
+sample_imgs(ddpm, net, output_path='/kaggle/working/', n_sample=16, shape=(16, 3, 128, 128))
