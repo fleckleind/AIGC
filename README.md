@@ -1,7 +1,6 @@
 # AIGC
 
-
-NOT FINISH!!!  
+## NOT FINISH!!!  
 Diffusion/DDIM  
 Diffusion/Stable Diffusion  
-VQ-VAE
+VQGAN/README/High-Resolution Generation
